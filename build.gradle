@@ -1,0 +1,61 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.6'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'site.kongdroid'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '11'
+}
+
+publishing {
+	repositories {
+		maven {
+			if(version.toString().endsWith('SNAPSHOT')){
+				url NEXUS_SNAPSHOT_URL
+			}else{
+				url NEXUS_RELEASE_URL
+			}
+			credentials {
+				username NEXUS_USER_NAME
+				password NEXUS_PASSWORD
+			}
+		}
+	}
+
+	publications {
+		maven(MavenPublication) {
+			groupId = 'site.kongdroid'
+			artifactId = 'common'
+			from components.java
+			artifact bootJar
+			versionMapping {
+				usage('java-api'){
+					fromResolutionOf('runtimeClasspath')
+				}
+				usage('java-runtime'){
+					fromResolutionResult()
+				}
+			}
+		}
+	}
+}
+
+repositories {
+	maven {
+		url ''
+		credentials {
+			username NEXUS_USER_NAME
+			password NEXUS_PASSWORD
+		}
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
