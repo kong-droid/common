@@ -24,23 +24,24 @@ java {
 	sourceCompatibility = '11'
 }
 
-//repositories {
-//	maven {
-//		if(version.toString().endsWith('SNAPSHOT')){
-//			url NEXUS_SNAPSHOT_URL
-//		}else{
-//			url NEXUS_RELEASE_URL
-//		}
-//		allowInsecureProtocol true
-//		credentials {
-//			username NEXUS_USER_NAME
-//			password NEXUS_PASSWORD
-//		}
-//	}
-//}
+repositories {
+	mavenCentral()
+	maven {
+		if(version.toString().endsWith('SNAPSHOT')){
+			url NEXUS_SNAPSHOT_URL
+		}else{
+			url NEXUS_RELEASE_URL
+		}
+		allowInsecureProtocol true
+		credentials {
+			username NEXUS_USER_NAME
+			password NEXUS_PASSWORD
+		}
+	}
+}
 
-//dependencies {
-//	implementation 'org.springframework.boot:spring-boot-starter'
-//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//}
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
 
