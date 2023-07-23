@@ -1,3 +1,4 @@
+
 val NEXUS_CENTRAL_URL : String by project
 val NEXUS_SNAPSHOT_URL : String by project
 val NEXUS_RELEASE_URL : String by project
@@ -23,9 +24,10 @@ java {
 	targetCompatibility = JavaVersion.VERSION_11
 }
 
+
 publishing {
 	publications {
-		create<MavenPublication>("") {
+		create<MavenPublication>("maven") {
 			groupId = "$PROJECT_GROUP"
 			artifactId = "$PROJECT_ARTIFACT_ID"
 			version = "$PROJECT_VERSION"
@@ -33,9 +35,8 @@ publishing {
 		}
 	}
 	repositories {
-		maven {NEXUS_SNAPSHOT_URL
-//			url = uri(if (project.hasProperty("RELEASE")) NEXUS_RELEASE_URL else NEXUS_SNAPSHOT_URL)
-			url = uri(if (project.hasProperty("RELEASE")) NEXUS_RELEASE_URL else NEXUS_RELEASE_URL)
+		maven {
+			url = uri(if (project.hasProperty("RELEASE")) NEXUS_RELEASE_URL else NEXUS_SNAPSHOT_URL)
 			isAllowInsecureProtocol = true
 			credentials {
 				username = "$NEXUS_USERNAME"
