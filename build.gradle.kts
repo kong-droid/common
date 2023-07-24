@@ -26,11 +26,13 @@ java {
 
 publishing {
 	publications {
-		create<MavenPublication>("maven") {
+		create<MavenPublication>("mavenBootJar") {
 			groupId = PROJECT_GROUP
 			artifactId = PROJECT_ARTIFACT_ID
 			version = PROJECT_VERSION
 			from(components["java"])
+			// task 스냅샷을 라이브러리로 설정함
+			artifact(tasks.named("bootJar").get())
 		}
 	}
 	repositories {
@@ -72,3 +74,7 @@ dependencies {
 	testAnnotationProcessor("org.projectlombok:lombok:1.18.12")
 }
 
+// 일반 아카이브 설정 지움
+tasks.named<Jar>("jar") {
+	enabled = false
+}
