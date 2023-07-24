@@ -1,4 +1,3 @@
-
 val NEXUS_CENTRAL_URL : String by project
 val NEXUS_SNAPSHOT_URL : String by project
 val NEXUS_RELEASE_URL : String by project
@@ -16,8 +15,8 @@ plugins {
 }
 
 
-group= "$PROJECT_GROUP"
-version= "$PROJECT_VERSION"
+group= PROJECT_GROUP
+version= PROJECT_VERSION
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_11
@@ -28,9 +27,9 @@ java {
 publishing {
 	publications {
 		create<MavenPublication>("maven") {
-			groupId = "$PROJECT_GROUP"
-			artifactId = "$PROJECT_ARTIFACT_ID"
-			version = "$PROJECT_VERSION"
+			groupId = PROJECT_GROUP
+			artifactId = PROJECT_ARTIFACT_ID
+			version = PROJECT_VERSION
 			from(components["java"])
 		}
 	}
@@ -39,8 +38,8 @@ publishing {
 			url = uri(if (project.hasProperty("RELEASE")) NEXUS_RELEASE_URL else NEXUS_SNAPSHOT_URL)
 			isAllowInsecureProtocol = true
 			credentials {
-				username = "$NEXUS_USERNAME"
-				password = "$NEXUS_PASSWORD"
+				username = NEXUS_USERNAME
+				password = NEXUS_PASSWORD
 			}
 		}
 	}
@@ -48,11 +47,11 @@ publishing {
 
 repositories {
 	maven {
-		url = uri("$NEXUS_CENTRAL_URL")
+		url = uri(NEXUS_CENTRAL_URL)
 		isAllowInsecureProtocol = true
 		credentials {
-			username = "$NEXUS_USERNAME"
-			password = "$NEXUS_PASSWORD"
+			username = NEXUS_USERNAME
+			password = NEXUS_PASSWORD
 		}
 	}
 }
@@ -65,11 +64,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("commons-codec:commons-codec:1.15")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-
 	runtimeOnly("com.mysql:mysql-connector-j")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testCompileOnly("org.projectlombok:lombok:1.18.12")
 	testAnnotationProcessor("org.projectlombok:lombok:1.18.12")
 }
