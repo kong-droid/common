@@ -25,6 +25,11 @@ java {
 
 repositories {
 	maven {
+		url = uri(NEXUS_PUBLIC_URL)
+		isAllowInsecureProtocol = true
+	}
+
+	maven {
 		url = uri(NEXUS_CENTRAL_URL)
 		isAllowInsecureProtocol = true
 		credentials {
@@ -41,8 +46,6 @@ publishing {
 			artifactId = PROJECT_ARTIFACT_ID
 			version = PROJECT_VERSION
 			from(components["java"])
-			// task 스냅샷을 라이브러리로 설정함
-//			artifact(tasks.named("bootJar").get())
 		}
 	}
 	repositories {
@@ -58,18 +61,14 @@ publishing {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-web-services")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("commons-codec:commons-codec:1.15")
-
 	runtimeOnly("com.mysql:mysql-connector-j")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testCompileOnly("org.projectlombok:lombok:1.18.12")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.12")
+	compileOnly("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
 }
 
 
